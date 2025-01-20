@@ -68,7 +68,7 @@
             padding: 20px;
             margin: 10px;
             border: 1px solid #ddd;
-            width: 90%;
+            width: 200px;
             text-align: center;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -109,7 +109,7 @@
     </footer>
 
     <script>
-        const API_KEY = 'AIzaSyAuD7yqX_dphG-MlNW2DM1XqALw6Mks_wE';  // Replace with your YouTube API Key
+        const API_KEY = 'YOUR_YOUTUBE_API_KEY';  // Replace with your YouTube API Key
         const API_URL = 'https://www.googleapis.com/youtube/v3/search';
 
         document.getElementById('search').addEventListener('input', function() {
@@ -133,48 +133,17 @@
 
         function displayVideos(videos) {
             const playlistContainer = document.getElementById('playlist');
-            playlistContainer.innerHTML = '';
-
-            const categorizedVideos = categorizeVideos(videos);
-
-            for (const category in categorizedVideos) {
-                const categoryDiv = document.createElement('div');
-                categoryDiv.innerHTML = `<h3>${category}</h3>`;
-                
-                categorizedVideos[category].forEach(video => {
-                    const videoDiv = document.createElement('div');
-                    videoDiv.classList.add('video');
-                    videoDiv.innerHTML = `
-                        <p>${video.snippet.title}</p>
-                        <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    `;
-                    categoryDiv.appendChild(videoDiv);
-                });
-
-                playlistContainer.appendChild(categoryDiv);
-            }
-        }
-
-        function categorizeVideos(videos) {
-            const categories = {
-                'Kitchen Hacks': []
-                // ,'General Hacks': []
-            };
+            playlistContainer.innerHTML = ''; // Clear existing videos
 
             videos.forEach(video => {
-                const title = video.snippet.title.toLowerCase();
-                if (title.includes('kitchen')) {
-                    categories['Kitchen Hacks'].push(video);
-                } else if (title.includes('health')) {
-                    categories['Health Hacks'].push(video);
-                } else if (title.includes('tech')) {
-                    categories['Tech Hacks'].push(video);
-                } else {
-                    categories['General Hacks'].push(video);
-                }
+                const videoDiv = document.createElement('div');
+                videoDiv.classList.add('video');
+                videoDiv.innerHTML = `
+                    <p>${video.snippet.title}</p>
+                    <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+                playlistContainer.appendChild(videoDiv);
             });
-
-            return categories;
         }
     </script>
 
