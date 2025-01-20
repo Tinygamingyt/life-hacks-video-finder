@@ -77,15 +77,8 @@
         }
 
         iframe {
-            width: 100%;
-            height: 150px;
-        }
-
-        .thumbnail {
-            width: 200px; /* Set width of the thumbnail */
-            height: 60px; /* Set height of the thumbnail */
-            object-fit: cover; /* Ensure the image fills the box while maintaining aspect ratio */
-            margin-bottom: 10px;
+            width: 200px; /* Set width of the video preview */
+            height: 100px; /* Set height of the video preview */
         }
 
         footer {
@@ -146,10 +139,8 @@
                 const videoDiv = document.createElement('div');
                 videoDiv.classList.add('video');
 
-                // Create the video thumbnail
-                const thumbnailUrl = video.snippet.thumbnails.medium.url; // Get the medium thumbnail
+                // Create the video element without thumbnails
                 videoDiv.innerHTML = `
-                    <img src="${thumbnailUrl}" class="thumbnail" alt="${video.snippet.title}">
                     <p>${video.snippet.title}</p>
                     <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 `;
