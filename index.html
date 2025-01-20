@@ -15,8 +15,8 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #FFF;
+            background-color: #f7f7f7;
+            color: #333;
             line-height: 1.6;
         }
 
@@ -58,17 +58,17 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
-            margin-top: 10px;
-            width: 80%; /* 40 pixels wider than the video preview */
+            margin-top: 30px;
+            width: calc(200px + 40px); /* 40 pixels wider than the video preview */
         }
 
         .playlist div {
             background-color: #444;
             color: white;
-            padding: 10px;
-            margin: 5px;
+            padding: 20px;
+            margin: 10px;
             border: 1px solid #ddd;
-            width: 240px;
+            width: 200px;
             text-align: center;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -80,7 +80,7 @@
 
         iframe {
             width: 200px; /* Set width of the video preview */
-            height: 150px; /* Set height of the video preview */
+            height: 100px; /* Set height of the video preview */
         }
 
         .video-title {
@@ -130,7 +130,7 @@
 
         async function fetchVideos(query) {
             try {
-                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&key=${API_KEY}`);
+                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&maxResults=30&key=${API_KEY}`);
                 const data = await response.json();
                 displayVideos(data.items);
             } catch (error) {
