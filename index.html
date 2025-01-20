@@ -96,4 +96,67 @@
             margin-top: 20px;
         }
     </style>
-<
+</head>
+<body>
+
+    <header>
+        <h1>Life Hacks Video Finder</h1>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for life hacks...">
+        <button id="searchButton">Search</button>
+    </div>
+
+    <div class="playlist" id="playlist"></div>
+
+    <footer>
+        <p>&copy; 2025 Life Hacks Video Finder</p>
+    </footer>
+
+    <script>
+        const API_KEY = 'AIzaSyAuD7yqX_dphG-MlNW2DM1XqALw6Mks_wE';  // Your YouTube API Key
+        const API_URL = 'https://www.googleapis.com/youtube/v3/search';
+
+        // Event listener for the search button
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const query = document.getElementById('search').value.trim();
+            if (query.length > 0) {
+                fetchVideos(query);
+            } else {
+                document.getElementById('playlist').innerHTML = '';
+            }
+        });
+
+        async function fetchVideos(query) {
+            try {
+                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&key=${API_KEY}`);
+                const data = await response.json();
+                displayVideos(data.items);
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+            }
+        }
+
+        function displayVideos(videos) {
+            const playlistContainer = document.getElementById('playlist');
+            playlistContainer.innerHTML = ''; // Clear existing videos
+
+            videos.forEach(video => {
+                const videoDiv = document.createElement('div');
+                videoDiv.classList.add('video');
+
+                // Create the video thumbnail
+                const thumbnailUrl = video.snippet.thumbnails.medium.url; // Get the medium thumbnail
+                videoDiv.innerHTML = `
+                    <img src="${thumbnailUrl}" class="thumbnail" alt="${video.snippet.title}">
+                    <p>${video.snippet.title}</p>
+                    <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+                playlistContainer.appendChild(videoDiv);
+            });
+        }
+    </script>
+
+</body>
+</html>
