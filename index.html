@@ -27,22 +27,6 @@
             text-align: center;
         }
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style-type: none;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         .search-container {
             text-align: center;
             margin: 20px;
@@ -54,6 +38,20 @@
             margin-top: 20px;
             border-radius: 5px;
             border: 1px solid #ddd;
+        }
+
+        #searchButton {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        #searchButton:hover {
+            background-color: #555;
         }
 
         .playlist {
@@ -83,6 +81,13 @@
             height: 150px;
         }
 
+        .thumbnail {
+            width: 200px; /* Set width of the thumbnail */
+            height: 60px; /* Set height of the thumbnail */
+            object-fit: cover; /* Ensure the image fills the box while maintaining aspect ratio */
+            margin-bottom: 10px;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -91,61 +96,4 @@
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
-
-    <header>
-        <h1>Life Hacks Video Finder</h1>
-    </header>
-
-    <div class="search-container">
-        <input type="text" id="search" placeholder="Search for life hacks...">
-    </div>
-
-    <div class="playlist" id="playlist"></div>
-
-    <footer>
-        <p>&copy; 2025 Life Hacks Video Finder</p>
-    </footer>
-
-    <script>
-        const API_KEY = 'AIzaSyAuD7yqX_dphG-MlNW2DM1XqALw6Mks_wE';  // Replace with your YouTube API Key
-        const API_URL = 'https://www.googleapis.com/youtube/v3/search';
-
-        document.getElementById('search').addEventListener('input', function() {
-            const query = this.value.trim();
-            if (query.length > 0) {
-                fetchVideos(query);
-            } else {
-                document.getElementById('playlist').innerHTML = '';
-            }
-        });
-
-        async function fetchVideos(query) {
-            try {
-                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&key=${API_KEY}`);
-                const data = await response.json();
-                displayVideos(data.items);
-            } catch (error) {
-                console.error('Error fetching videos:', error);
-            }
-        }
-
-        function displayVideos(videos) {
-            const playlistContainer = document.getElementById('playlist');
-            playlistContainer.innerHTML = ''; // Clear existing videos
-
-            videos.forEach(video => {
-                const videoDiv = document.createElement('div');
-                videoDiv.classList.add('video');
-                videoDiv.innerHTML = `
-                    <p>${video.snippet.title}</p>
-                    <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                `;
-                playlistContainer.appendChild(videoDiv);
-            });
-        }
-    </script>
-
-</body>
-</html>
+<
