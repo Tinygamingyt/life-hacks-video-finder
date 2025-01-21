@@ -102,11 +102,12 @@
         }
 
         iframe {
-            width: 360px; /* Set width of the video preview */
-            height: 240px; /* Set height of the video preview */
+            width: 60vw; /* Set width to 60% of the viewport width */
+            height: calc(60vw * 9 / 16); /* Maintain 16:9 aspect ratio */
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
+
 
         .video-title {
             font-weight: bold;
