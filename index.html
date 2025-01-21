@@ -34,9 +34,8 @@
         }
 
         .logo {
-            width: 100%;
-            max-width: 880px;
-            height: auto;
+            width: 880px;
+            height: 466px;
         }
 
         .search-container {
@@ -81,7 +80,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .video {
+        .playlist div {
             background-color: #333;
             color: #00d4ff;
             padding: 20px;
@@ -89,22 +88,26 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            width: 60%;
+            width: 70vw;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .video:hover {
+        .playlist div:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
 
+        .video {
+            margin-top: 10px;
+        }
+
         iframe {
-            width: 60vw;
-            height: calc(60vw * 9 / 16);
+            width: 60vw; /* Set width to 60% of the viewport width */
+            height: calc(60vw * 9 / 16); /* Maintain 16:9 aspect ratio */
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            max-width: 100%;
         }
+
 
         .video-title {
             font-weight: bold;
@@ -141,32 +144,6 @@
             margin-top: 20px;
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
         }
-
-        /* Media Queries for responsiveness */
-        @media (max-width: 768px) {
-            #search {
-                width: 80%;
-            }
-
-            #searchButton {
-                width: 100%;
-                margin-left: 0;
-            }
-
-            .video {
-                width: 80%;
-            }
-
-            iframe {
-                width: 80vw;
-                height: calc(80vw * 9 / 16);
-            }
-
-            footer {
-                padding: 15px;
-                margin-top: 10px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -197,7 +174,7 @@
         document.getElementById('searchButton').addEventListener('click', function() {
             const userQuery = document.getElementById('search').value.trim();
             if (userQuery.length > 0) {
-                const query = `${userQuery} "how to" OR "life hack"`;
+                const query = ${userQuery} "how to" OR "life hack";
                 fetchVideos(query);
             } else {
                 document.getElementById('playlist').innerHTML = '';
@@ -206,7 +183,7 @@
 
         async function fetchVideos(query) {
             try {
-                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&maxResults=50&key=${API_KEY}`);
+                const response = await fetch(${API_URL}?part=snippet&type=video&q=${query}&maxResults=50&key=${API_KEY});
                 const data = await response.json();
                 videos = data.items;
                 currentVideoIndex = 0;
@@ -226,11 +203,11 @@
                 videoDiv.classList.add('video');
 
                 // Create the video element with updated styling
-                videoDiv.innerHTML = `
+                videoDiv.innerHTML = 
                     <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <p class="video-title">${video.snippet.title}</p>
                     <a class="next-button" onclick="nextVideo()">Next</a>
-                `;
+                ;
                 playlistContainer.appendChild(videoDiv);
             }
         }
