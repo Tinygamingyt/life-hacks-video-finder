@@ -34,8 +34,9 @@
         }
 
         .logo {
-            width: 880px;
-            height: 466px;
+            width: 100%;
+            max-width: 880px;
+            height: auto;
         }
 
         .search-container {
@@ -80,7 +81,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .playlist div {
+        .video {
             background-color: #333;
             color: #00d4ff;
             padding: 20px;
@@ -92,22 +93,18 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .playlist div:hover {
+        .video:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
 
-        .video {
-            margin-top: 10px;
-        }
-
         iframe {
-            width: 60vw; /* Set width to 60% of the viewport width */
-            height: calc(60vw * 9 / 16); /* Maintain 16:9 aspect ratio */
+            width: 60vw;
+            height: calc(60vw * 9 / 16);
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
         }
-
 
         .video-title {
             font-weight: bold;
@@ -144,12 +141,39 @@
             margin-top: 20px;
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
         }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            #search {
+                width: 80%;
+            }
+
+            #searchButton {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .video {
+                width: 80%;
+            }
+
+            iframe {
+                width: 80vw;
+                height: calc(80vw * 9 / 16);
+            }
+
+            footer {
+                padding: 15px;
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-          <h1><img src="https://www.yourdentistryguide.com/wp-content/uploads/2018/05/life-hack.jpg" alt="Life Hacks Video Finder" class="logo"></h1>
+        <img src="https://www.yourdentistryguide.com/wp-content/uploads/2018/05/life-hack.jpg" alt="Life Hacks Logo" class="logo">
+        <h1>Life Hacks Video Finder</h1>
     </header>
 
     <div class="search-container">
