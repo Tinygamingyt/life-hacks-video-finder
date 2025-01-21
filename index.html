@@ -34,8 +34,8 @@
         }
 
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
         }
 
         .search-container {
@@ -88,7 +88,7 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            width: 340px;
+            width: 380px;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
@@ -102,8 +102,8 @@
         }
 
         iframe {
-            width: 320px; /* Set width of the video preview */
-            height: 180px; /* Set height of the video preview */
+            width: 360px; /* Set width of the video preview */
+            height: 240px; /* Set height of the video preview */
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
@@ -112,6 +112,27 @@
             font-weight: bold;
             margin-top: 10px;
             color: #fff;
+        }
+
+        .next-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #00d4ff;
+            color: #222;
+            border: none;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            cursor: pointer;
+            width: 150px;
+        }
+
+        .next-button:hover {
+            background-color: #005f7f;
         }
 
         footer {
@@ -145,11 +166,14 @@
     <script>
         const API_KEY = 'AIzaSyAuD7yqX_dphG-MlNW2DM1XqALw6Mks_wE';  // Your YouTube API Key
         const API_URL = 'https://www.googleapis.com/youtube/v3/search';
+        let currentVideoIndex = 0;
+        let videos = [];
 
         // Event listener for the search button
         document.getElementById('searchButton').addEventListener('click', function() {
-            const query = document.getElementById('search').value.trim();
-            if (query.length > 0) {
+            const userQuery = document.getElementById('search').value.trim();
+            if (userQuery.length > 0) {
+                const query = `${userQuery} "how to" OR "life hack"`;
                 fetchVideos(query);
             } else {
                 document.getElementById('playlist').innerHTML = '';
@@ -158,19 +182,22 @@
 
         async function fetchVideos(query) {
             try {
-                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&maxResults=30&key=${API_KEY}`);
+                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${query}&maxResults=50&key=${API_KEY}`);
                 const data = await response.json();
-                displayVideos(data.items);
+                videos = data.items;
+                currentVideoIndex = 0;
+                displayVideo();
             } catch (error) {
                 console.error('Error fetching videos:', error);
             }
         }
 
-        function displayVideos(videos) {
+        function displayVideo() {
             const playlistContainer = document.getElementById('playlist');
-            playlistContainer.innerHTML = ''; // Clear existing videos
+            playlistContainer.innerHTML = ''; // Clear existing video
 
-            videos.forEach(video => {
+            if (videos.length > 0 && currentVideoIndex < videos.length) {
+                const video = videos[currentVideoIndex];
                 const videoDiv = document.createElement('div');
                 videoDiv.classList.add('video');
 
@@ -178,9 +205,17 @@
                 videoDiv.innerHTML = `
                     <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <p class="video-title">${video.snippet.title}</p>
+                    <a class="next-button" onclick="nextVideo()">Next</a>
                 `;
                 playlistContainer.appendChild(videoDiv);
-            });
+            }
+        }
+
+        function nextVideo() {
+            if (currentVideoIndex < videos.length - 1) {
+                currentVideoIndex++;
+                displayVideo();
+            }
         }
     </script>
 
