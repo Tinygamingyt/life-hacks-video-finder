@@ -173,7 +173,7 @@
         document.getElementById('searchButton').addEventListener('click', function() {
             const userQuery = document.getElementById('search').value.trim();
             if (userQuery.length > 0) {
-                const query = ${userQuery} "how to" OR "life hack";
+                const query = `${userQuery} "how to" OR "life hack"`; // Corrected template literal
                 fetchVideos(query);
             } else {
                 document.getElementById('playlist').innerHTML = '';
@@ -182,7 +182,7 @@
 
         async function fetchVideos(query) {
             try {
-                const response = await fetch(${API_URL}?part=snippet&type=video&q=${query}&maxResults=50&key=${API_KEY});
+                const response = await fetch(`${API_URL}?part=snippet&type=video&q=${encodeURIComponent(query)}&maxResults=50&key=${API_KEY}`);
                 const data = await response.json();
                 videos = data.items;
                 currentVideoIndex = 0;
@@ -203,10 +203,9 @@
 
                 // Create the video element with updated styling
                 videoDiv.innerHTML = 
-                    <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    `<iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <p class="video-title">${video.snippet.title}</p>
-                    <a class="next-button" onclick="nextVideo()">Next</a>
-                ;
+                    <a class="next-button" onclick="nextVideo()">Next</a>`;
                 playlistContainer.appendChild(videoDiv);
             }
         }
